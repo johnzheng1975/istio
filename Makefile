@@ -23,7 +23,7 @@ SHELL := /bin/bash
 VERSION ?= 0.5.0
 
 # locations where artifacts are stored
-ISTIO_DOCKER_HUB ?= docker.io/istio
+ISTIO_DOCKER_HUB ?= quay.io/fitstation
 export ISTIO_DOCKER_HUB
 ISTIO_GCS ?= istio-release/releases/$(VERSION)
 ISTIO_URL ?= https://storage.googleapis.com/$(ISTIO_GCS)
@@ -423,11 +423,12 @@ ${ISTIO_BIN}/go-junit-report:
 
 # Run coverage tests
 JUNIT_UNIT_TEST_XML ?= $(ISTIO_OUT)/junit_unit-tests.xml
-test: | $(JUNIT_REPORT)
-	mkdir -p $(dir $(JUNIT_UNIT_TEST_XML))
-	set -o pipefail; \
-	$(MAKE) --keep-going common-test mixer-test security-test broker-test galley-test pilot-test \
-	2>&1 | tee >($(JUNIT_REPORT) > $(JUNIT_UNIT_TEST_XML))
+#test: | $(JUNIT_REPORT)
+#	mkdir -p $(dir $(JUNIT_UNIT_TEST_XML))
+#	set -o pipefail; \
+#	$(MAKE) --keep-going common-test mixer-test security-test broker-test galley-test pilot-test \
+#	$(MAKE) --keep-going common-test mixer-test security-test \
+#	2>&1 | tee >($(JUNIT_REPORT) > $(JUNIT_UNIT_TEST_XML))
 
 GOTEST_PARALLEL ?= '-test.parallel=4'
 GOTEST_P ?= -p 1
@@ -445,10 +446,10 @@ localTestEnv: test-bins
 
 # Temp. disable parallel test - flaky consul test.
 # https://github.com/istio/istio/issues/2318
-.PHONY: pilot-test
-PILOT_TEST_T ?= ${GOTEST_P} ${T}
-pilot-test: pilot-agent
-	go test ${PILOT_TEST_T} ./pilot/...
+#.PHONY: pilot-test
+#PILOT_TEST_T ?= ${GOTEST_P} ${T}
+#pilot-test: pilot-agent
+#	go test ${PILOT_TEST_T} ./pilot/...
 
 .PHONY: mixer-test
 MIXER_TEST_T ?= ${T} ${GOTEST_PARALLEL}
@@ -456,13 +457,13 @@ mixer-test: mixs
 	# Some tests use relative path "testdata", must be run from mixer dir
 	(cd mixer; go test ${MIXER_TEST_T} ./...)
 
-.PHONY: broker-test
-broker-test: depend
-	go test ${T} ./broker/...
+#.PHONY: broker-test
+#broker-test: depend
+#	go test ${T} ./broker/...
 
-.PHONY: galley-test
-galley-test: depend
-	go test ${T} ./galley/...
+#.PHONY: galley-test
+#galley-test: depend
+#	go test ${T} ./galley/...
 
 .PHONY: security-test
 security-test:
