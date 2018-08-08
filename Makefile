@@ -23,7 +23,7 @@ SHELL := /bin/bash
 VERSION ?= 0.8-dev
 
 # locations where artifacts are stored
-ISTIO_DOCKER_HUB ?= docker.io/istio
+ISTIO_DOCKER_HUB ?= quay.io/fitstation
 export ISTIO_DOCKER_HUB
 ISTIO_GCS ?= istio-release/releases/$(VERSION)
 ISTIO_URL ?= https://storage.googleapis.com/$(ISTIO_GCS)

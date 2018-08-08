@@ -13,7 +13,7 @@ global:
   statsdEndpoint: istio-statsd-prom-bridge.istio-system
 
   # Default tag for Istio images.
-  hub: docker.io/istionightly
+  hub: quay.io/fitstationnightly
 
   # Default tag for Istio images.
   # Should track latest released version.

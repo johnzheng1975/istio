@@ -48,7 +48,7 @@ GCS_GITHUB_SECRET="istio-secrets/github.txt.enc"
 REL_ORG="istio"
 GCR_DST=""
 GCS_DST=""
-DOCKER_DST="istio" # docker.io/istio
+DOCKER_DST="istio" # quay.io/fitstation
 REL_REPO="istio"
 
 function usage() {

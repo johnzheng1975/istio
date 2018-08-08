@@ -1,5 +1,5 @@
 healthPort: true
-testHub: docker.io/istio
+testHub: quay.io/fitstation
 testTag: latest
 
 # Namespace where istio control plane is installed.

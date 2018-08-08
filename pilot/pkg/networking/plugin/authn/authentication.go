@@ -125,7 +125,7 @@ func ConvertPolicyToJwtConfig(policy *authn.Policy, useInlinePublicKey bool) *jw
 		return nil
 	}
 	ret := &jwtfilter.JwtAuthentication{
-		AllowMissingOrFailed: true,
+		AllowMissingOrFailed: false,
 	}
 	for _, policyJwt := range policyJwts {
 		jwt := &jwtfilter.JwtRule{

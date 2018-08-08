@@ -32,7 +32,7 @@ const (
 	// This is the hub to expect in
 	// platform/kube/inject/testdata/frontend.yaml.injected and the
 	// other .injected "want" YAMLs
-	unitTestHub = "docker.io/istio"
+	unitTestHub = "quay.io/fitstation"
 
 	// Tag name should be kept in sync with value in
 	// platform/kube/inject/refresh.sh
@@ -40,16 +40,16 @@ const (
 )
 
 func TestImageName(t *testing.T) {
-	want := "docker.io/istio/proxy_init:latest"
-	if got := InitImageName("docker.io/istio", "latest", true); got != want {
+	want := "quay.io/fitstation/proxy_init:latest"
+	if got := InitImageName("quay.io/fitstation", "latest", true); got != want {
 		t.Errorf("InitImageName() failed: got %q want %q", got, want)
 	}
-	want = "docker.io/istio/proxy_debug:latest"
-	if got := ProxyImageName("docker.io/istio", "latest", true); got != want {
+	want = "quay.io/fitstation/proxy_debug:latest"
+	if got := ProxyImageName("quay.io/fitstation", "latest", true); got != want {
 		t.Errorf("ProxyImageName() failed: got %q want %q", got, want)
 	}
-	want = "docker.io/istio/proxy:latest"
-	if got := ProxyImageName("docker.io/istio", "latest", false); got != want {
+	want = "quay.io/fitstation/proxy:latest"
+	if got := ProxyImageName("quay.io/fitstation", "latest", false); got != want {
 		t.Errorf("ProxyImageName(debug:false) failed: got %q want %q", got, want)
 	}
 }

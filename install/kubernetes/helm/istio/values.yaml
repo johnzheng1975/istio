@@ -8,8 +8,8 @@ global:
   # Default repository for Istio images.
   # Releases are published to docker hub under 'istio' project.
   # Daily builds from prow are on gcr.io, and nightly builds from circle on
-  # docker.io/istionightly
-  hub: docker.io/istio
+  # quay.io/fitstationnightly
+  hub: quay.io/fitstation
 
   # Default tag for Istio images.
   # Should track latest released version in the branch.

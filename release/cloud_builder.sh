@@ -31,7 +31,7 @@ OUTPUT_PATH=""
 TAG_NAME="0.0.0"
 BUILD_DEBIAN="true"
 BUILD_DOCKER="true"
-REL_DOCKER_HUB=docker.io/istio
+REL_DOCKER_HUB=quay.io/fitstation
 TEST_DOCKER_HUB=""
 TEST_GCS_PATH=""
 

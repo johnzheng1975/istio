@@ -46,7 +46,7 @@ elif [[ -n ${ISTIO_VERSION} ]]; then
   VERSION="${ISTIO_VERSION}"
 fi
 
-DOCKER_HUB="docker.io/istio"
+DOCKER_HUB="quay.io/fitstation"
 if [[ -n ${ISTIO_DOCKER_HUB} ]]; then
   DOCKER_HUB="${ISTIO_DOCKER_HUB}"
 fi

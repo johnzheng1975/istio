@@ -5,7 +5,7 @@ NAMESPACE:=fortio
 
 YAMLS:=k8services-istio.yaml k8services.yaml k8cli.yaml
 # Was needed when images were missing (#553)
-#PATCH_HUB:='| sed -e "s!docker.io/istio!gcr.io/istio-io!g"'
+#PATCH_HUB:='| sed -e "s!quay.io/fitstation!gcr.io/istio-io!g"'
 
 deploy: k8services-istio client
 

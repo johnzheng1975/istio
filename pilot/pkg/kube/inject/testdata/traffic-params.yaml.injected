@@ -67,7 +67,7 @@ spec:
               fieldPath: metadata.name
         - name: ISTIO_META_INTERCEPTION_MODE
           value: REDIRECT
-        image: docker.io/istio/proxy:unittest
+        image: quay.io/fitstation/proxy:unittest
         imagePullPolicy: IfNotPresent
         name: istio-proxy
         resources:
@@ -100,7 +100,7 @@ spec:
         - 80,
         - -d
         - 4,5,6
-        image: docker.io/istio/proxy_init:unittest
+        image: quay.io/fitstation/proxy_init:unittest
         imagePullPolicy: IfNotPresent
         name: istio-init
         resources: {}
