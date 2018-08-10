@@ -89,7 +89,7 @@ docker.proxy_debug: pilot/docker/envoy_telemetry.yaml.tmpl
 	# Not using $^ to avoid 2 copies of envoy
 	cp tools/deb/envoy_bootstrap_v2.json tools/deb/istio-iptables.sh $(ISTIO_OUT)/pilot-agent pilot/docker/Dockerfile.proxyv2 $(DOCKER_BUILD_TOP)/proxyd/
 	time (cd $(DOCKER_BUILD_TOP)/proxyd && \
-		docker build \
+		docker build --build-arg https_proxy=http://15.85.195.199:8080/ --build-arg http_proxy=http://15.85.195.199:8080/ \
 		  --build-arg proxy_version=istio-proxy:${PROXY_REPO_SHA} \
 		  --build-arg istio_version=${VERSION} \
 		-t $(HUB)/proxy_debug:$(TAG) -f Dockerfile.proxyv2 .)
@@ -111,7 +111,7 @@ docker.proxyv2: pilot/docker/envoy_telemetry.yaml.tmpl
 	mkdir -p $(DOCKER_BUILD_TOP)/proxyv2
 	cp $^ $(DOCKER_BUILD_TOP)/proxyv2/
 	time (cd $(DOCKER_BUILD_TOP)/proxyv2 && \
-		docker build  \
+		docker build --build-arg https_proxy=http://15.85.195.199:8080/ --build-arg http_proxy=http://15.85.195.199:8080/  \
 		  --build-arg proxy_version=istio-proxy:${PROXY_REPO_SHA} \
 		  --build-arg istio_version=${VERSION} \
 		-t $(HUB)/proxyv2:$(TAG) -f Dockerfile.proxyv2 .)
@@ -128,7 +128,7 @@ docker.proxytproxy: pilot/docker/envoy_telemetry.yaml.tmpl
 	mkdir -p $(DOCKER_BUILD_TOP)/proxyv2
 	cp $^ $(DOCKER_BUILD_TOP)/proxyv2/
 	time (cd $(DOCKER_BUILD_TOP)/proxyv2 && \
-		docker build  \
+		docker build --build-arg https_proxy=http://15.85.195.199:8080/ --build-arg http_proxy=http://15.85.195.199:8080/  \
 		  --build-arg proxy_version=istio-proxy:${PROXY_REPO_SHA} \
 		  --build-arg istio_version=${VERSION} \
 		-t $(HUB)/proxytproxy:$(TAG) -f Dockerfile.proxytproxy .)
@@ -140,7 +140,7 @@ docker.pilot: $(ISTIO_OUT)/pilot-discovery pilot/docker/certs/cacert.pem pilot/d
 	mkdir -p $(ISTIO_DOCKER)/pilot
 	cp $^ $(ISTIO_DOCKER)/pilot/
 	time (cd $(ISTIO_DOCKER)/pilot && \
-		docker build -t $(HUB)/pilot:$(TAG) -f Dockerfile.pilot .)
+		docker build --build-arg https_proxy=http://15.85.195.199:8080/ --build-arg http_proxy=http://15.85.195.199:8080/ -t $(HUB)/pilot:$(TAG) -f Dockerfile.pilot .)
 
 # Test app for pilot integration
 docker.app: $(ISTIO_OUT)/pilot-test-client $(ISTIO_OUT)/pilot-test-server \
@@ -154,7 +154,7 @@ ifeq ($(DEBUG_IMAGE),1)
 	sed -e "s,FROM scratch,FROM $(HUB)/proxy_debug:$(TAG)," $(ISTIO_DOCKER)/pilotapp/Dockerfile.appdbg > $(ISTIO_DOCKER)/pilotapp/Dockerfile.appd
 endif
 	time (cd $(ISTIO_DOCKER)/pilotapp && \
-		docker build -t $(HUB)/app:$(TAG) -f Dockerfile.app .)
+		docker build --build-arg https_proxy=http://15.85.195.199:8080/ --build-arg http_proxy=http://15.85.195.199:8080/ -t $(HUB)/app:$(TAG) -f Dockerfile.app .)
 
 # Test policy backend for mixer integration
 docker.test_policybackend: $(ISTIO_OUT)/mixer-test-policybackend \
@@ -162,7 +162,7 @@ docker.test_policybackend: $(ISTIO_OUT)/mixer-test-policybackend \
 	mkdir -p $(ISTIO_DOCKER)/test_policybackend
 	cp $^ $(ISTIO_DOCKER)/test_policybackend
 	time (cd $(ISTIO_DOCKER)/test_policybackend && \
-		docker build -t $(HUB)/test_policybackend:$(TAG) -f Dockerfile.test_policybackend .)
+		docker build --build-arg https_proxy=http://15.85.195.199:8080/ --build-arg http_proxy=http://15.85.195.199:8080/ -t $(HUB)/test_policybackend:$(TAG) -f Dockerfile.test_policybackend .)
 
 PILOT_DOCKER:=docker.proxy_init docker.sidecar_injector
 $(PILOT_DOCKER): pilot/docker/Dockerfile$$(suffix $$@) | $(ISTIO_DOCKER)
@@ -210,7 +210,7 @@ docker.grafana: addons/grafana/Dockerfile$$(suffix $$@) $(GRAFANA_FILES) $(ISTIO
 DOCKER_TARGETS:=docker.pilot docker.proxy_debug docker.proxyv2 docker.app docker.test_policybackend $(PILOT_DOCKER) $(SERVICEGRAPH_DOCKER) $(MIXER_DOCKER) $(SECURITY_DOCKER) docker.grafana $(GALLEY_DOCKER)
 
 DOCKER_RULE=time (cp $< $(ISTIO_DOCKER)/ && cd $(ISTIO_DOCKER) && \
-            docker build -t $(HUB)/$(subst docker.,,$@):$(TAG) -f Dockerfile$(suffix $@) .)
+            docker build --build-arg https_proxy=http://15.85.195.199:8080/ --build-arg http_proxy=http://15.85.195.199:8080/ -t $(HUB)/$(subst docker.,,$@):$(TAG) -f Dockerfile$(suffix $@) .)
 
 # This target will package all docker images used in test and release, without re-building
 # go binaries. It is intended for CI/CD systems where the build is done in separate job.
@@ -253,7 +253,7 @@ docker.push: $(DOCKER_PUSH_TARGETS)
 # Base image for 'debug' containers.
 # You can run it first to use local changes (or guarantee it is built from scratch)
 docker.basedebug:
-	docker build -t istionightly/base_debug -f docker/Dockerfile.xenial_debug docker/
+	docker build --build-arg https_proxy=http://15.85.195.199:8080/ --build-arg http_proxy=http://15.85.195.199:8080/ -t istionightly/base_debug -f docker/Dockerfile.xenial_debug docker/
 
 # Job run from the nightly cron to publish an up-to-date xenial with the debug tools.
 docker.push.basedebug: docker.basedebug

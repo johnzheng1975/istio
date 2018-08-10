@@ -40,7 +40,7 @@ function m() {
 # Image used by the circleci, including all tools
 export DOCKER_BUILDER=${DOCKER_BUILDER:-istio/ci:go1.9-k8s1.7.4}
 
-# Runs the Istio docker builder image, using the current workspace and user id.
+# Runs the Istio docker build --build-arg https_proxy=http://15.85.195.199:8080/ --build-arg http_proxy=http://15.85.195.199:8080/er image, using the current workspace and user id.
 function dbuild() {
   docker run --rm -u "$(id -u)" -it \
 	  --volume /var/run/docker.sock:/var/run/docker.sock \
