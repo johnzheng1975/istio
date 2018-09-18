@@ -24,6 +24,8 @@ ENV ISTIO_META_INTERCEPTION_MODE TPROXY
 # and dynamic iptable config
 
 ADD envoy /usr/local/bin/envoy
+ADD libnats.so /usr/lib/libnats.so
+ADD libprotobuf-c.so /usr/lib/libprotobuf-c.so
 
 ADD pilot-agent /usr/local/bin/pilot-agent
 
