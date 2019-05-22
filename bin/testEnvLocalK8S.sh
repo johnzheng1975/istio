@@ -65,7 +65,7 @@ function ensureK8SCerts() {
 }
 
 # Get dependencies needed for tests. Only needed once.
-# The docker build --build-arg https_proxy=http://15.85.195.199:8080/ --build-arg http_proxy=http://15.85.195.199:8080/er image should include them.
+# The docker build image should include them.
 function getDeps() {
    mkdir -p "$GO_TOP/bin"
    if [ ! -f "$GO_TOP/bin/kubectl" ] ; then

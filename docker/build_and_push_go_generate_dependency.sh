@@ -8,7 +8,7 @@
 HUB=gcr.io/istio-testing
 VERSION=$(date +%Y-%m-%d)
 
-docker build --build-arg https_proxy=http://15.85.195.199:8080/ --build-arg http_proxy=http://15.85.195.199:8080/ --no-cache -t $HUB/go_generate_dependency:$VERSION -f Dockerfile.go_generate_dependency .
+docker build --no-cache -t $HUB/go_generate_dependency:$VERSION -f Dockerfile.go_generate_dependency .
 
 gcloud auth configure-docker
 
