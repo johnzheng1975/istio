@@ -26,6 +26,8 @@ VERSION ?= 1.0-dev
 #ISTIO_DOCKER_HUB ?= docker.io/istio
 ISTIO_DOCKER_HUB ?= quay.io/fitstation
 export ISTIO_DOCKER_HUB
+HUB ?= quay.io/fitstation
+export HUB
 ISTIO_GCS ?= istio-release/releases/$(VERSION)
 ISTIO_URL ?= https://storage.googleapis.com/$(ISTIO_GCS)
 
